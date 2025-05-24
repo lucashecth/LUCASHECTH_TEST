@@ -22,14 +22,25 @@ public class Character_Movement : MonoBehaviour
 
         if(inputs != Vector3.zero)
         {
-            animator.SetBool("isWalking", true);
-            transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10); 
-            //animator.SetFloat("inputX", inputs.x);
-            //animator.SetFloat("inputY", inputs.z);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {     
+                animator.SetBool("isRunning", true);
+                speed = 5f;
+                transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10);
+            }
+            else
+            {
+                animator.SetBool("isWalking", true);
+                speed = 1.3f;
+                transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10);
+                //animator.SetFloat("inputX", inputs.x);
+                //animator.SetFloat("inputY", inputs.z);
+            }
         }
         else
         {
             animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
         }
     }
 }
