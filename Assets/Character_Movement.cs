@@ -23,13 +23,15 @@ public class Character_Movement : MonoBehaviour
         if(inputs != Vector3.zero)
         {
             if (Input.GetKey(KeyCode.LeftShift))
-            {     
+            {
+                StopAllPreviousAnimations();
                 animator.SetBool("isRunning", true);
                 speed = 5f;
                 transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10);
             }
             else
             {
+                StopAllPreviousAnimations();
                 animator.SetBool("isWalking", true);
                 speed = 1.3f;
                 transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10);
@@ -39,8 +41,12 @@ public class Character_Movement : MonoBehaviour
         }
         else
         {
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isRunning", false);
+            StopAllPreviousAnimations();
         }
+    }
+    public void StopAllPreviousAnimations()
+    {
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", false);
     }
 }
