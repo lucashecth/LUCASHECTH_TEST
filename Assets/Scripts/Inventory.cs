@@ -80,6 +80,7 @@ public class Inventory : MonoBehaviour
         }
 
     }
+
     public void ChangeSelectedSlot(int newValue)
     {
         if (selectedSlot >= 0)
@@ -90,7 +91,8 @@ public class Inventory : MonoBehaviour
         inventorySlots[newValue].Select(); // Deselect the previously selected slot
         selectedSlot = newValue; // Update the selected slot index
     }
-    public Item GetSelectedItem()
+
+    public Item GetSelectedItem() // DAR UMA OLHADA QUE DEVE DAR PRA TIRAR 
     {
         Debug.Log("tete: " + selectedSlot);
         InventorySlot slot = inventorySlots[selectedSlot];

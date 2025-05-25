@@ -12,10 +12,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public int countItem = 1; // Count of items in the stack
     public Text countText; // Text to display the item count
 
+    //public ItemDetails itemDetails; // Reference to the InventorySlot script
+    public GameObject itemDetailsGO;
+
     public void InitializeItem(Item newItem)
     {
         item = newItem; // Assign the new item to the current item
         image.sprite = newItem.image; // Set the image sprite from the item
+        itemDetailsGO = GameObject.Find("InventoryEngine"); // Fill the item details with the new item
         RefreshCount(); // Refresh the count display    
     }
     public void RefreshCount()
@@ -45,7 +49,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
     public void OnItemClicked(PointerEventData eventData)
     {
-        Debug.Log("Item clicked: " + item.name); // Log do item clicado
-                                                 // Aqui você pode mostrar painel de informações ou fazer outra ação
+        Debug.Log("Item clicked: " + item.name);
+        itemDetailsGO.GetComponent<ItemDetails>().FillDetails(item.image, item.name); // Fill the item details with the current item
+        //itemDetails.FillDetails(item.image, item.name); // Fill the item details with the current item
     }
 }
