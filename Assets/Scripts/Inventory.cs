@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour
             {
                 itemInSlot.countItem++;
                 itemInSlot.RefreshCount(); // Refresh the count display
+
                 return true;
             }
         }
@@ -43,12 +44,23 @@ public class Inventory : MonoBehaviour
         return false; // No empty slot found
     }
 
-    // Update is called once per frame
     void SpawnNewItem(Item item, InventorySlot slot)
     {
-        GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform); // Instantiate the item prefab in the slot
-        InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>(); // Get the InventoryItem component
-        inventoryItem.InitializeItem(item); // Initialize the item with the provided item
+        GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
+        InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
+        inventoryItem.InitializeItem(item);
+
+        // Procurar o ForwardClickToParent no objeto instanciado ou seus filhos
+        ForwardClickToParent forwardClick = newItemGO.GetComponentInChildren<ForwardClickToParent>();
+        if (forwardClick != null)
+        {
+            forwardClick.inventoryItemParent = inventoryItem; // atribui referência para o pai
+            Debug.Log("ForwardClickToParent vinculado ao InventoryItem com sucesso");
+        }
+        else
+        {
+            Debug.LogWarning("ForwardClickToParent não encontrado no prefab instanciado!");
+        }
     }
 
     void Update()

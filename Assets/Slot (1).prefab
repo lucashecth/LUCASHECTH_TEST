@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3166147661136728787}
   - component: {fileID: 1313278100919205648}
   - component: {fileID: 2349270166845599119}
+  - component: {fileID: 6293816265596203904}
   m_Layer: 5
   m_Name: Slot (1)
   m_TagString: Untagged
@@ -116,3 +117,15 @@ MonoBehaviour:
   image: {fileID: 3166147661136728787}
   selectedColor: {r: 0.67724824, g: 0.500623, b: 0.8490566, a: 1}
   notSelectedColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &6293816265596203904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8607572870089493243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ca00cd34b58054ab8c14c079fc5f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

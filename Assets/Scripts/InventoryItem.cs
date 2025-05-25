@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -41,5 +42,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // Handle the end of the drag
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag); // Return to the original parent
+    }
+    public void OnItemClicked(PointerEventData eventData)
+    {
+        Debug.Log("Item clicked: " + item.name); // Log do item clicado
+                                                 // Aqui você pode mostrar painel de informações ou fazer outra ação
     }
 }

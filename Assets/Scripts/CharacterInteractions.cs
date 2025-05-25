@@ -25,6 +25,7 @@ public class CharacterInteractions : MonoBehaviour
                 PickupItem(1); // Chama o método PickupItem com o ID do item desejado
                 Debug.Log("Jogador pressionou a tecla E dentro do collider!");
                 characterMovement.PickingItemFromFloor();
+                Destroy(this.gameObject); // Destroi o objeto após pegar o item
             }
         }
     }
