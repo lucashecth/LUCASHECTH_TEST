@@ -20,6 +20,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         item = newItem; // Assign the new item to the current item
         image.sprite = newItem.image; // Set the image sprite from the item
         itemDetailsGO = GameObject.Find("InventoryEngine"); // Fill the item details with the new item
+        parentAfterDrag = transform.parent;
         RefreshCount(); // Refresh the count display    
     }
     public void RefreshCount()
@@ -50,7 +51,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnItemClicked(PointerEventData eventData)
     {
         Debug.Log("Item clicked: " + item.name);
-        itemDetailsGO.GetComponent<ItemDetails>().FillDetails(item.image, item.name); // Fill the item details with the current item
-        //itemDetails.FillDetails(item.image, item.name); // Fill the item details with the current item
+        int countItem = parentAfterDrag.GetComponentInChildren<InventoryItem>().countItem;
+        itemDetailsGO.GetComponent<ItemDetails>().FillDetails(item.image, item.name, parentAfterDrag.gameObject,countItem); // Fill the item details with the current item
+        itemDetailsGO.GetComponent<Inventory>().ClearDeleteSlot();
+        itemDetailsGO.GetComponent<Inventory>().deletePopUp.SetActive(false); // Hide the delete popup
+        
     }
 }
