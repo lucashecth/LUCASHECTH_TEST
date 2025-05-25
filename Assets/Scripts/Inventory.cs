@@ -126,18 +126,20 @@ public class Inventory : MonoBehaviour
             itemDetails.ClearDetails(); // Limpa os detalhes
             deletePopUp.SetActive(false); // Fecha o pop-up
         }
-        else
+        else if(int.Parse(quantityText.text)< itemQuantity && itemToDestroy != null)
         {
-
+            itemToDestroy.countItem -= int.Parse(quantityText.text); // Decrementa a quantidade do item
+            itemToDestroy.RefreshCount(); // Atualiza a contagem do item
+            itemDetails.ClearDetails(); // Limpa os detalhes
+            ClearDeleteSlot();
+            deletePopUp.SetActive(false); // Fecha o pop-up
         }
+
     }
     public void ClearDeleteSlot()
     {
-        //minusPopUp.interactable = false; // Disable the minus button
-        //plusPopUp.interactable = false; // Disable the plus button
         int itemQuantity = itemDetails.itemQuantity;
-        Debug.Log("itemQuantity: " + itemQuantity);
-        //quantityText.text = "1"; // Reset the quantity text to 1
+        quantityText.text = "1"; // Reset the quantity text to 1
         if (itemQuantity == 1)
         {
             minusPopUp.interactable = false; // Disable the minus button
