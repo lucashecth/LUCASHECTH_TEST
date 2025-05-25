@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae1a1c045661e8a49b0d94df4bd60c58, type: 3}
-  m_Name: Water
+  m_Script: {fileID: 11500000, guid: fe8bc5e3638f65b499acfb957990e887, type: 3}
+  m_Name: ItemDatabaseAsset
   m_EditorClassIdentifier: 
-  id: 1
-  tileBase: {fileID: 0}
-  image: {fileID: 21300000, guid: 77730b418a46ec349a0555fd22399d85, type: 3}
-  itemType: 0
-  actionType: 0
-  range: {x: 5, y: 4}
-  stackable: 1
+  items:
+  - {fileID: 11400000, guid: 31438c8aeebe2a2469398987ee2d6483, type: 2}
+  - {fileID: 11400000, guid: 17ec7c4802bbbb84d8b65a3f08f8e69a, type: 2}

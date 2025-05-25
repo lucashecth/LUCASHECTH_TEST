@@ -3,19 +3,29 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
+using static SaveAndLoad;
 
 public class Inventory : MonoBehaviour
 {
     public int MaxStackedItems = 3; // Maximum number of items in a stack
-    public GameObject inventory;
+    public GameObject inventory, menu;
     public InventorySlot[] inventorySlots; // Array of inventory slots
     public GameObject inventoryItemPrefab; // Prefab for the inventory item
     public ItemDetails itemDetails; // Reference to the ItemDetails script
     public GameObject deletePopUp; // Reference to the delete popup image
     public Button minusPopUp, plusPopUp; // Reference to the buttons in the delete popup
     public TMP_Text quantityText; // Reference to the text displaying the quantity in the delete popup
+    public ItemDatabase itemDatabase; // Reference to the ItemDatabase script
+
     int selectedSlot = 0; // Index of the currently selected slot
 
+    private string savePath => Application.persistentDataPath + "/inventorySave.json";
+    void Awake()
+    {
+        itemDatabase.Initialize();
+        LoadInventory();
+    }
     public bool AddItem(Item item)
     {
         //Check if the item is on the inventory already
@@ -59,12 +69,60 @@ public class Inventory : MonoBehaviour
         if (forwardClick != null)
         {
             forwardClick.inventoryItemParent = inventoryItem; // atribui referência para o pai
-            Debug.Log("ForwardClickToParent vinculado ao InventoryItem com sucesso");
         }
-        else
+    }
+    public void SaveInventory()
+    {
+        InventoryData data = new InventoryData();
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            Debug.LogWarning("ForwardClickToParent não encontrado no prefab instanciado!");
+            InventoryItem item = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+            if (item != null)
+            {
+                data.items.Add(new ItemData
+                {
+                    itemID = item.item.id.ToString(),
+                    count = item.countItem,
+                    slotIndex = i
+                });
+            }
         }
+        File.WriteAllText(savePath, JsonUtility.ToJson(data, true));
+        Debug.Log("Inventario salvo em: " + savePath);
+    }
+    public void LoadInventory()
+    {
+        if (!File.Exists(savePath)) return;
+
+        string json = File.ReadAllText(savePath);
+        InventoryData data = JsonUtility.FromJson<InventoryData>(json);
+
+        foreach (var slot in inventorySlots)
+        {
+            InventoryItem existing = slot.GetComponentInChildren<InventoryItem>();
+            if (existing != null) Destroy(existing.gameObject);
+        }
+
+        foreach (ItemData itemData in data.items)
+        {
+            Item item = itemDatabase.GetItemByID(int.Parse(itemData.itemID));
+            if (item != null && itemData.slotIndex >= 0 && itemData.slotIndex < inventorySlots.Length)
+            {
+                GameObject newItem = Instantiate(inventoryItemPrefab, inventorySlots[itemData.slotIndex].transform);
+                InventoryItem invItem = newItem.GetComponent<InventoryItem>();
+                invItem.InitializeItem(item);
+                invItem.countItem = itemData.count;
+                invItem.RefreshCount();
+
+                ForwardClickToParent forwardClick = newItem.GetComponentInChildren<ForwardClickToParent>();
+                if (forwardClick != null)
+                {
+                    forwardClick.inventoryItemParent = invItem;
+                }
+            }
+        }
+
+        Debug.Log("Inventario carregado.");
     }
 
     void Update()
@@ -74,14 +132,24 @@ public class Inventory : MonoBehaviour
             if (!inventory.activeSelf)
             {
                 inventory.SetActive(true); // Toggle inventory visibility
-                Debug.Log("Inventory toggled!"); // Placeholder for actual inventory UI toggle
             }
             else
             {
                 inventory.SetActive(false); // Toggle inventory visibility
-                Debug.Log("Inventory toggled off!"); // Placeholder for actual inventory UI toggle
             }
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!menu.activeSelf)
+            {
+                menu.SetActive(true); // Toggle inventory visibility
+            }
+            else
+            {
+                menu.SetActive(false); // Toggle inventory visibility
+            }
+        }
+
 
     }
 
@@ -194,5 +262,14 @@ public class Inventory : MonoBehaviour
             Debug.Log("itemQuantity: " + itemQuantity);
         }
         quantityText.text = quantity.ToString(); // Update the quantity text
+    }
+    public void SaveGame()
+    {
+        SaveInventory();
+    }
+
+    public void LoadGame()
+    {
+        LoadInventory();
     }
 }
