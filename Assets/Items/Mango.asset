@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae1a1c045661e8a49b0d94df4bd60c58, type: 3}
-  m_Name: Oxygen
+  m_Name: Mango
   m_EditorClassIdentifier: 
-  id: 0
+  id: 4
   tileBase: {fileID: 0}
-  image: {fileID: 21300000, guid: 4798a16cd2da7be4cbfc65d3c1bdeaf8, type: 3}
-  itemType: 0
-  actionType: 1
+  image: {fileID: 21300000, guid: e568dffe738e6d3448742d7a781fbd50, type: 3}
+  itemType: 3
+  actionType: 3
   range: {x: 5, y: 4}
   stackable: 1

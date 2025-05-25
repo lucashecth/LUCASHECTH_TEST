@@ -18,13 +18,15 @@ public class Item : ScriptableObject
     {
         HealthItem,
         Weapon,
-        Tool
+        Tool,
+        collectible
     }
     public enum ActionType
     {
         Oxygen,
         Water,
-        Equip
+        Equip,
+        Task
     }
 
 }

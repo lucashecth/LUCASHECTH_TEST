@@ -1,3 +1,5 @@
+using System.Drawing;
+using TMPro;
 using UnityEngine;
 
 public class CharacterInteractions : MonoBehaviour
@@ -6,27 +8,59 @@ public class CharacterInteractions : MonoBehaviour
     public Inventory inventory; // Reference to the InventoryManager script
     public Item[] itensToPickup; // Item to add to the inventory
     public Character_Movement characterMovement; // Reference to the Character_Movement script
+    public bool isOnTrigger = false;
+    public GameObject PressToDo;
+    public string itemType;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Verifica se o objeto que entrou tem a tag "Player"
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Jogador entrou no collider!");
+            PressToDo.SetActive(true);
+            PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[0].name;
+            isOnTrigger = true;
+}
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PressToDo.SetActive(false);
+            isOnTrigger = false;
         }
     }
 
-    // Método chamado enquanto o jogador está dentro do collider
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            isOnTrigger = true;
+        }
+    }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && isOnTrigger)
+        {
+            switch (itemType)
             {
-                PickupItem(1); // Chama o método PickupItem com o ID do item desejado
-                Debug.Log("Jogador pressionou a tecla E dentro do collider!");
-                characterMovement.PickingItemFromFloor();
-                Destroy(this.gameObject); // Destroi o objeto após pegar o item
+                case "Oxygen":
+                    PickupItem(0);
+                    break;
+                case "Water":
+                    PickupItem(1);
+                    break;
+                case "Apple":
+                    PickupItem(2);
+                    break;
+                case "Banana":
+                    PickupItem(3);
+                    break;
+                case "Mango":
+                    PickupItem(4);
+                    break;
             }
+                characterMovement.PickingItemFromFloor();
+                Destroy(this.gameObject);
         }
     }
     public void PickupItem(int Id)
