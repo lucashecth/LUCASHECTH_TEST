@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public InventorySlot[] inventorySlots; // Array of inventory slots
     public GameObject inventoryItemPrefab; // Prefab for the inventory item
 
-    int selectedSlot = -1; // Index of the currently selected slot
+    int selectedSlot = 0; // Index of the currently selected slot
 
 
     public bool AddItem(Item item)
@@ -67,7 +67,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-    }/*
+    }
     public void ChangeSelectedSlot(int newValue)
     {
         if (selectedSlot >= 0)
@@ -77,5 +77,16 @@ public class Inventory : MonoBehaviour
 
         inventorySlots[newValue].Select(); // Deselect the previously selected slot
         selectedSlot = newValue; // Update the selected slot index
-    }*/
+    }
+    public Item GetSelectedItem()
+    {
+        Debug.Log("tete: " + selectedSlot);
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null)
+        {
+            return itemInSlot.item; // Return the item in the selected slot
+        }
+        return null; // No item in the selected slot
+    }
 }

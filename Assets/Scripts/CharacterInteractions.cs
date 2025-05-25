@@ -1,11 +1,33 @@
 using UnityEngine;
 
-public class DemoScript : MonoBehaviour
+public class CharacterInteractions : MonoBehaviour
 {
+    public Collider interactableCollider;
     public Inventory inventory; // Reference to the InventoryManager script
     public Item[] itensToPickup; // Item to add to the inventory
+    public Character_Movement characterMovement; // Reference to the Character_Movement script
 
-    // Update is called once per frame
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) // Verifica se o objeto que entrou tem a tag "Player"
+        {
+            Debug.Log("Jogador entrou no collider!");
+        }
+    }
+
+    // Método chamado enquanto o jogador está dentro do collider
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                PickupItem(1); // Chama o método PickupItem com o ID do item desejado
+                Debug.Log("Jogador pressionou a tecla E dentro do collider!");
+                characterMovement.PickingItemFromFloor();
+            }
+        }
+    }
     public void PickupItem(int Id)
     {
         bool result = inventory.AddItem(itensToPickup[Id]); // Attempt to add the item to the inventory

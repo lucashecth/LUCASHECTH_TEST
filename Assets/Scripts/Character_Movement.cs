@@ -49,4 +49,9 @@ public class Character_Movement : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunning", false);
     }
+    public void PickingItemFromFloor()
+    {
+        StopAllPreviousAnimations();
+        animator.SetTrigger("isPicking");
+    }
 }
