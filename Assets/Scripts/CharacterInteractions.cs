@@ -17,7 +17,26 @@ public class CharacterInteractions : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PressToDo.SetActive(true);
-            PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[0].name;
+            switch (itemType)
+            {
+                case "Oxygen":
+                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[0].name;
+                    break;
+                case "Water":
+                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[1].name;
+                    break;
+                case "Apple":
+                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[2].name;
+                    break;
+                case "Banana":
+                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[3].name;
+                    break;
+                case "Mango":
+                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[4].name;  
+                    break;
+            }
+            
+            
             isOnTrigger = true;
 }
     }
@@ -60,7 +79,8 @@ public class CharacterInteractions : MonoBehaviour
                     break;
             }
                 characterMovement.PickingItemFromFloor();
-                Destroy(this.gameObject);
+            PressToDo.SetActive(false);
+            Destroy(this.gameObject);
         }
     }
     public void PickupItem(int Id)
@@ -72,7 +92,6 @@ public class CharacterInteractions : MonoBehaviour
         }
         else
         {
-            Debug.Log("Inventory full, could not add item: " + itensToPickup[Id].name); // Log failure
         }
     }
     public void GetSelectedItem()

@@ -55,6 +55,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         itemDetailsGO.GetComponent<ItemDetails>().FillDetails(item.image, item.name, parentAfterDrag.gameObject,countItem); // Fill the item details with the current item
         itemDetailsGO.GetComponent<Inventory>().ClearDeleteSlot();
         itemDetailsGO.GetComponent<Inventory>().deletePopUp.SetActive(false); // Hide the delete popup
-        
+        itemDetailsGO.GetComponent<ItemDetails>().ShowDetails(item, countItem); // Show the item details
     }
 }

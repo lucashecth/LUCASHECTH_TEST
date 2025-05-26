@@ -121,8 +121,6 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Inventario carregado.");
     }
 
     void Update()
