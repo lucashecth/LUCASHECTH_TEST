@@ -74,19 +74,17 @@ public class RobotQuestChecker : MonoBehaviour
 
     private IEnumerator ShowEndScreenWithFade()
     {
-        yield return new WaitForSeconds(2f); // Espera 2 segundos
+        yield return new WaitForSeconds(5f); // Espera 2 segundos
 
         endGameScreen.SetActive(true);
 
-        float duration = 1.5f;
+        float duration = 5f;
         float time = 0f;
         while (time < duration)
         {
             time += Time.deltaTime;
-            float alpha = Mathf.Lerp(0f, 1f, time / duration);
-            endScreenCanvasGroup.alpha = alpha;
+            float alpha = Mathf.Lerp(0f, 5f, time / duration);
             yield return null;
         }
-        endScreenCanvasGroup.alpha = 1f;
     }
 }

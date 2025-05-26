@@ -7,7 +7,6 @@ public class LifeBar : MonoBehaviour
     public Image fillImage;
     private float maxTime = 300f; // 5 minutos
     private float currentTime;
-    //public Character_Movement playerMovement;
     public Animator animator;
     public ItemDetails itemDetails;
     public Inventory inventory;
@@ -21,7 +20,7 @@ public class LifeBar : MonoBehaviour
     {
         if (animator.GetBool("isRunning") == true)
         {
-            currentTime -= Time.deltaTime * 2;
+            currentTime -= Time.deltaTime * 4;
             currentTime = Mathf.Clamp(currentTime, 0, maxTime);
             fillImage.fillAmount = currentTime / maxTime;
         }
