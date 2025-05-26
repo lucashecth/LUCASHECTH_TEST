@@ -1,59 +1,92 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using System.Collections;
 
 public class RobotQuestChecker : MonoBehaviour
 {
-    public Inventory inventory; // Referência ao inventário
-    public string appleID = "1";
-    public string bananaID = "2";
-    public string mangoID = "3";
+    public GameObject questHolder;
+    public Inventory inventory;
+    public string appleID;
+    public string bananaID;
+    public string mangoID;
 
-    public GameObject endGameScreen; // Tela de fim de jogo (se tiver)
-
+    public GameObject endGameScreen;
+    private CanvasGroup endScreenCanvasGroup;
     private bool questComplete = false;
+
+    private void Start()
+    {
+        if (endGameScreen != null)
+        {
+            endScreenCanvasGroup = endGameScreen.GetComponent<CanvasGroup>();
+            if (endScreenCanvasGroup != null)
+            {
+                endScreenCanvasGroup.alpha = 0f;
+                endGameScreen.SetActive(false);
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (this.GetComponent<RobotQuestChecker>().isActiveAndEnabled)
+        if (!this.isActiveAndEnabled) return;
+        if (!other.CompareTag("Player")) return;
+
+        bool hasApple = false;
+        bool hasBanana = false;
+        bool hasMango = false;
+
+        foreach (InventorySlot slot in inventory.inventorySlots)
         {
-            if (!other.CompareTag("Player")) return;
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null) continue;
 
-            bool hasApple = false;
-            bool hasBanana = false;
-            bool hasMango = false;
+            string itemID = itemInSlot.item.id.ToString();
+            if (itemID == appleID) hasApple = true;
+            if (itemID == bananaID) hasBanana = true;
+            if (itemID == mangoID) hasMango = true;
+        }
 
-            foreach (InventorySlot slot in inventory.inventorySlots)
+        if (hasApple && hasBanana && hasMango)
+        {
+            if (!questComplete)
             {
-                InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-                if (itemInSlot == null) continue;
+                questComplete = true;
+                questHolder.SetActive(true);
+                questHolder.GetComponentInChildren<TMP_Text>().text = "All items have been collected, you made a great job! \nYou're hired!!!";
 
-                string itemID = itemInSlot.item.id.ToString();
-
-                if (itemID == appleID) hasApple = true;
-                if (itemID == bananaID) hasBanana = true;
-                if (itemID == mangoID) hasMango = true;
-            }
-
-            if (hasApple && hasBanana && hasMango)
-            {
-                if (!questComplete)
+                if (endGameScreen != null)
                 {
-                    questComplete = true;
-                    Debug.Log("✅ All Itens has been collected");
-                    if (endGameScreen != null)
-                    {
-                        endGameScreen.SetActive(true); // Mostrar tela de fim de jogo
-                    }
+                    StartCoroutine(ShowEndScreenWithFade());
                 }
             }
-            else
-            {
-                string missing = "You still need: ";
-                if (!hasApple) missing += "🍎 Apple ";
-                if (!hasBanana) missing += "🍌 Banana ";
-                if (!hasMango) missing += "🥭 Mango ";
-
-                Debug.Log(missing);
-            }
         }
+        else
+        {
+            questHolder.SetActive(true);
+            string missing = "You still need: ";
+            if (!hasApple) missing += "Apple ";
+            if (!hasBanana) missing += "Banana ";
+            if (!hasMango) missing += "Mango";
+            questHolder.GetComponentInChildren<TMP_Text>().text = missing;
+        }
+    }
+
+    private IEnumerator ShowEndScreenWithFade()
+    {
+        yield return new WaitForSeconds(2f); // Espera 2 segundos
+
+        endGameScreen.SetActive(true);
+
+        float duration = 1.5f;
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, time / duration);
+            endScreenCanvasGroup.alpha = alpha;
+            yield return null;
+        }
+        endScreenCanvasGroup.alpha = 1f;
     }
 }

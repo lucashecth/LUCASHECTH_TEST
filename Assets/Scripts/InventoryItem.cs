@@ -9,10 +9,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
     public Transform parentAfterDrag;
     public Item item; // Reference to the Item scriptable object
-    public int countItem = 1; // Count of items in the stack
-    public Text countText; // Text to display the item count
+    public int countItem = 1; 
+    public Text countText; 
 
-    //public ItemDetails itemDetails; // Reference to the InventorySlot script
     public GameObject itemDetailsGO;
 
     public void InitializeItem(Item newItem)
@@ -52,9 +51,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         Debug.Log("Item clicked: " + item.name);
         int countItem = parentAfterDrag.GetComponentInChildren<InventoryItem>().countItem;
-        itemDetailsGO.GetComponent<ItemDetails>().FillDetails(item.image, item.name, parentAfterDrag.gameObject,countItem); // Fill the item details with the current item
+        itemDetailsGO.GetComponent<ItemDetails>().FillDetails(item.image, item.name, parentAfterDrag.gameObject,countItem);
         itemDetailsGO.GetComponent<Inventory>().ClearDeleteSlot();
-        itemDetailsGO.GetComponent<Inventory>().deletePopUp.SetActive(false); // Hide the delete popup
-        itemDetailsGO.GetComponent<ItemDetails>().ShowDetails(item, countItem); // Show the item details
+        itemDetailsGO.GetComponent<Inventory>().deletePopUp.SetActive(false);
+        itemDetailsGO.GetComponent<ItemDetails>().ShowDetails(item, countItem);
     }
 }

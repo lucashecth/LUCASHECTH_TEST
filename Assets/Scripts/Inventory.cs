@@ -88,7 +88,7 @@ public class Inventory : MonoBehaviour
             }
         }
         File.WriteAllText(savePath, JsonUtility.ToJson(data, true));
-        Debug.Log("Inventario salvo em: " + savePath);
+        Debug.Log("Inventory saved in: " + savePath);
     }
     public void LoadInventory()
     {
@@ -129,26 +129,24 @@ public class Inventory : MonoBehaviour
         {
             if (!inventory.activeSelf)
             {
-                inventory.SetActive(true); // Toggle inventory visibility
+                inventory.SetActive(true);
             }
             else
             {
-                inventory.SetActive(false); // Toggle inventory visibility
+                inventory.SetActive(false);
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (!menu.activeSelf)
             {
-                menu.SetActive(true); // Toggle inventory visibility
+                menu.SetActive(true);
             }
             else
             {
-                menu.SetActive(false); // Toggle inventory visibility
+                menu.SetActive(false);
             }
         }
-
-
     }
 
     public void ChangeSelectedSlot(int newValue)
@@ -162,9 +160,8 @@ public class Inventory : MonoBehaviour
         selectedSlot = newValue; // Update the selected slot index
     }
 
-    public Item GetSelectedItem() // DAR UMA OLHADA QUE DEVE DAR PRA TIRAR 
+    public Item GetSelectedItem() 
     {
-        Debug.Log("tete: " + selectedSlot);
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
         if (itemInSlot != null)
@@ -182,23 +179,23 @@ public class Inventory : MonoBehaviour
         {
             if (itemToDestroy != null)
             {
-                Destroy(itemToDestroy.gameObject); // Destroi o GameObject do item
+                Destroy(itemToDestroy.gameObject); 
             }
             else
             {
                 Debug.LogWarning("Nenhum InventoryItem encontrado no slot para remover.");
             }
 
-            itemDetails.ClearDetails(); // Limpa os detalhes
-            deletePopUp.SetActive(false); // Fecha o pop-up
+            itemDetails.ClearDetails(); 
+            deletePopUp.SetActive(false);
         }
         else if(int.Parse(quantityText.text)< itemQuantity && itemToDestroy != null)
         {
-            itemToDestroy.countItem -= int.Parse(quantityText.text); // Decrementa a quantidade do item
-            itemToDestroy.RefreshCount(); // Atualiza a contagem do item
-            itemDetails.ClearDetails(); // Limpa os detalhes
+            itemToDestroy.countItem -= int.Parse(quantityText.text); 
+            itemToDestroy.RefreshCount(); 
+            itemDetails.ClearDetails(); 
             ClearDeleteSlot();
-            deletePopUp.SetActive(false); // Fecha o pop-up
+            deletePopUp.SetActive(false); 
         }
 
     }
@@ -208,27 +205,27 @@ public class Inventory : MonoBehaviour
         quantityText.text = "1"; // Reset the quantity text to 1
         if (itemQuantity == 1)
         {
-            minusPopUp.interactable = false; // Disable the minus button
-            plusPopUp.interactable = false; // Enable the plus button
+            minusPopUp.interactable = false; 
+            plusPopUp.interactable = false; 
         }
         else if(itemQuantity > 1 && (itemQuantity < MaxStackedItems|| itemQuantity == MaxStackedItems))
         {
-            minusPopUp.interactable = false; // Disable the plus button
-            plusPopUp.interactable = true; // Enable the plus button
+            minusPopUp.interactable = false; 
+            plusPopUp.interactable = true; 
         }
     }
 
 
     public void QuantityToRemove(string whichBTNIsPressed)
     {
-        int quantity = int.Parse(quantityText.text); // Get the current quantity text
+        int quantity = int.Parse(quantityText.text);
         int itemQuantity = itemDetails.itemQuantity;
         if (whichBTNIsPressed == "minus")
         {
             if (itemQuantity == 1)
             {
-                minusPopUp.interactable = false; // Disable the minus button
-                plusPopUp.interactable = false; // Enable the plus button
+                minusPopUp.interactable = false;
+                plusPopUp.interactable = false;
             }
             Debug.Log("itemQuantity: " + itemQuantity);
             Debug.Log("quantidade: " + quantity);
@@ -238,8 +235,8 @@ public class Inventory : MonoBehaviour
                 quantity--;
                 if (quantity == 1)
                 {
-                    minusPopUp.interactable = false; // Disable the minus button
-                    plusPopUp.interactable = true; // Enable the plus button
+                    minusPopUp.interactable = false;
+                    plusPopUp.interactable = true;
                 }
             }
             Debug.Log("itemQuantity: " + itemQuantity);
@@ -250,11 +247,11 @@ public class Inventory : MonoBehaviour
             if (quantity < itemQuantity)
             {
                 quantity++;
-                minusPopUp.interactable = true; // Disable the plus button
+                minusPopUp.interactable = true;
                 if (quantity == itemQuantity)
                 {
-                    plusPopUp.interactable = false; // Disable the plus button
-                    minusPopUp.interactable = true; // Enable the minus button
+                    plusPopUp.interactable = false;
+                    minusPopUp.interactable = true;
                 }
             }
             Debug.Log("itemQuantity: " + itemQuantity);

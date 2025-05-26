@@ -35,11 +35,10 @@ public class CharacterInteractions : MonoBehaviour
                     PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[4].name;
                     break;
             }
-
-
             isOnTrigger = true;
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -56,6 +55,7 @@ public class CharacterInteractions : MonoBehaviour
             isOnTrigger = true;
         }
     }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && isOnTrigger)
@@ -86,10 +86,5 @@ public class CharacterInteractions : MonoBehaviour
     public void PickupItem(int Id)
     {
         bool result = inventory.AddItem(itensToPickup[Id]); // Attempt to add the item to the inventory
-    }
-
-    public void GetSelectedItem()
-    {
-        Item recievedItem = inventory.GetSelectedItem(); // Get the currently selected item from the inventory
     }
 }

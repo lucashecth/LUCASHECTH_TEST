@@ -9,6 +9,8 @@ public class LifeBar : MonoBehaviour
     private float currentTime;
     //public Character_Movement playerMovement;
     public Animator animator;
+    public ItemDetails itemDetails;
+    public Inventory inventory;
 
     void Start()
     {
@@ -36,6 +38,22 @@ public class LifeBar : MonoBehaviour
         {
             currentTime = currentTime + 60f; // Add 60 seconds to the current time
             fillImage.fillAmount = currentTime / maxTime;
+
+            InventoryItem itemToDestroy = itemDetails.itemPosition.GetComponentInChildren<InventoryItem>();
+            itemToDestroy.countItem -= 1;
+
+            if (itemToDestroy.countItem <= 0)
+            {
+                Destroy(itemToDestroy.gameObject); // Remove o item do inventário
+            }
+            else
+            {
+                itemToDestroy.RefreshCount(); // Apenas atualiza o texto se ainda houver unidades
+            }
+
+            itemDetails.ClearDetails();
+            inventory.ClearDeleteSlot();
+
         }
     }
 

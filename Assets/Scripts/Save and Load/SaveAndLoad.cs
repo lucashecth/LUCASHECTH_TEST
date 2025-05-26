@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SaveAndLoad : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [System.Serializable]
     public class ItemData
     {

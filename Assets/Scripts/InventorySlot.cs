@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    public Image image; // Reference to the Image component for the slot
+    public Image image;
     public Color selectedColor, notSelectedColor;
     public void Awake()
     {
@@ -13,11 +13,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void Select()
     {
-        image.color = selectedColor; // Change the color to selected color
+        image.color = selectedColor;
     }
     public void Deselect()
     {
-        image.color = notSelectedColor; // Change the color to not selected color
+        image.color = notSelectedColor;
     }
     
     public void OnDrop(PointerEventData eventData)

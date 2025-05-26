@@ -4,23 +4,24 @@ using UnityEngine.UI;
 
 public class ItemDetails : MonoBehaviour
 {
-    public Image itemImage; // Reference to the image component
-    public TMP_Text itemNameText; // Reference to the text component for the item name
-    public GameObject itemPosition; // Reference to the transform for positioning the details panel
-    public int itemQuantity; // Quantity of the item
+    public Image itemImage;
+    public TMP_Text itemNameText;
+    public GameObject itemPosition;
+    public int itemQuantity;
     public GameObject useButton;
+    public Sprite defaultSprite; 
 
     public void FillDetails(Sprite sprite, string itemName, GameObject positionAtList, int itemCount)
     {
-        itemImage.sprite = sprite; // Set the image sprite
-        itemNameText.text = itemName; // Set the item name text
+        itemImage.sprite = sprite; 
+        itemNameText.text = itemName; 
         itemPosition = positionAtList; // Set the position of the details panel
-        itemQuantity = itemCount; // Set the item quantity
+        itemQuantity = itemCount; 
     }
     public void ClearDetails()
     {
-        itemImage.sprite = null; // Clear the image sprite
-        itemNameText.text = ""; // Clear the item name text
+        itemImage.sprite = defaultSprite;
+        itemNameText.text = ""; 
     }
     public void ShowDetails(Item item, int quantity)
     {

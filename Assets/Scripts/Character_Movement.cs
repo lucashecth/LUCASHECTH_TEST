@@ -35,8 +35,6 @@ public class Character_Movement : MonoBehaviour
                 animator.SetBool("isWalking", true);
                 speed = 1.3f;
                 transform.forward = Vector3.Slerp(transform.forward, inputs, Time.deltaTime * 10);
-                //animator.SetFloat("inputX", inputs.x);
-                //animator.SetFloat("inputY", inputs.z);
             }
         }
         else
