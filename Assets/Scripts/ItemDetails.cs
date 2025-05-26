@@ -24,12 +24,6 @@ public class ItemDetails : MonoBehaviour
     }
     public void ShowDetails(Item item, int quantity)
     {
-        // Atualiza imagem, nome, quantidade, etc.
-        //itemImage.sprite = item.image;
-        //itemNameText.text = item.name;
-        //itemQuantity = quantity;
-
-        // Mostra ou esconde o botão "Usar" dependendo do tipo
         if (item.itemType == Item.ItemType.HealthItem || item.actionType == Item.ActionType.Oxygen)
         {
             useButton.SetActive(true);

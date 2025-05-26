@@ -32,13 +32,13 @@ public class CharacterInteractions : MonoBehaviour
                     PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[3].name;
                     break;
                 case "Mango":
-                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[4].name;  
+                    PressToDo.GetComponent<TextMeshProUGUI>().text = "Press E to pick up " + itensToPickup[4].name;
                     break;
             }
-            
-            
+
+
             isOnTrigger = true;
-}
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -78,32 +78,18 @@ public class CharacterInteractions : MonoBehaviour
                     PickupItem(4);
                     break;
             }
-                characterMovement.PickingItemFromFloor();
+            characterMovement.PickingItemFromFloor();
             PressToDo.SetActive(false);
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.4f);
         }
     }
     public void PickupItem(int Id)
     {
         bool result = inventory.AddItem(itensToPickup[Id]); // Attempt to add the item to the inventory
-        if (result)
-        {
-            Debug.Log("Item added to inventory: " + itensToPickup[Id].name); // Log success
-        }
-        else
-        {
-        }
     }
+
     public void GetSelectedItem()
     {
         Item recievedItem = inventory.GetSelectedItem(); // Get the currently selected item from the inventory
-        if (recievedItem != null)
-        {
-            Debug.Log("Selected item: " + recievedItem.name); // Log the selected item
-        }
-        else
-        {
-            Debug.Log("No item selected!"); // Log if no item is selected
-        }
     }
 }
